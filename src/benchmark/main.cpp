@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) {
                 << num_batch_operations / batch_time * 1e9 <<","
                 << cumulative_lookups / cumulative_lookup_time * 1e9 <<","
                 << cumulative_inserts / cumulative_insert_time * 1e9 <<","
-                << cumulative_operations / cumulative_time * 1e9 <<"," 
+                << cumulative_operations / cumulative_time * 1e9 
                 << std::endl;
      }
 
