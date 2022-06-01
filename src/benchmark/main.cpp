@@ -149,9 +149,9 @@ int main(int argc, char* argv[]) {
                 << cumulative_inserts / cumulative_insert_time * 1e9 <<","
                 << cumulative_operations / cumulative_time * 1e9 <<"," 
                 << std::endl;
+     }
 
-
-     /* 
+       /* 
       << "Batch " << batch_no
                 << ", cumulative ops: " << cumulative_operations
                 << "\n\tbatch throughput:\t"
@@ -169,7 +169,9 @@ int main(int argc, char* argv[]) {
                 << std::endl;
     }
 
-*/
+        */
+
+
     // Check for workload end conditions
     if (num_actual_inserts < num_inserts_per_batch) {
       // End if we have inserted all keys in a workload with inserts
