@@ -134,11 +134,25 @@ int main(int argc, char* argv[]) {
     cumulative_inserts += num_actual_inserts;
 
     if (print_batch_stats) {
+      if(batch_no==1)
+        std::cout << "batch no, cumulative ops, batch lookup throughput (lookups/sec), batch insert throughput (inserts/sec), batch operation throughput (ops.sec), cumulative lookup throughput (lookups/sec), cumulative insert throughput (inserts/sec), cumulative operation throughput (ops.sec)"<< std::endl;
       int num_batch_operations = num_lookups_per_batch + num_actual_inserts;
       double batch_time = batch_lookup_time + batch_insert_time;
       long long cumulative_operations = cumulative_lookups + cumulative_inserts;
       double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
-      std::cout << "Batch " << batch_no
+      std::cout << batch_no <<","
+                << cumulative_operations <<","
+                << num_lookups_per_batch / batch_lookup_time * 1e9 <<","
+                << num_actual_inserts / batch_insert_time * 1e9 <<","
+                << num_batch_operations / batch_time * 1e9 <<","
+                << cumulative_lookups / cumulative_lookup_time * 1e9 <<","
+                << cumulative_inserts / cumulative_insert_time * 1e9 <<","
+                << cumulative_operations / cumulative_time * 1e9 <<"," 
+                << std::endl;
+
+
+     /* 
+      << "Batch " << batch_no
                 << ", cumulative ops: " << cumulative_operations
                 << "\n\tbatch throughput:\t"
                 << num_lookups_per_batch / batch_lookup_time * 1e9
@@ -155,6 +169,7 @@ int main(int argc, char* argv[]) {
                 << std::endl;
     }
 
+*/
     // Check for workload end conditions
     if (num_actual_inserts < num_inserts_per_batch) {
       // End if we have inserted all keys in a workload with inserts
@@ -171,6 +186,7 @@ int main(int argc, char* argv[]) {
 
   long long cumulative_operations = cumulative_lookups + cumulative_inserts;
   double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
+  /*
   std::cout << "Cumulative stats: " << batch_no << " batches, "
             << cumulative_operations << " ops (" << cumulative_lookups
             << " lookups, " << cumulative_inserts << " inserts)"
@@ -181,7 +197,7 @@ int main(int argc, char* argv[]) {
             << " inserts/sec,\t"
             << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
             << std::endl;
-
+*/
   delete[] keys;
   delete[] values;
 }
