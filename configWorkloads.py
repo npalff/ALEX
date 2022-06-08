@@ -44,7 +44,6 @@ try:
     workload_file.write("./build/benchmark --keys_file="+keysFile+"--keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.5 --lookup_distribution=zipf --print_batch_stats >> teste_50.csv\n")
     workload_file.write("./build/benchmark --keys_file="+keysFile+"--keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.66 --lookup_distribution=zipf --print_batch_stats >> teste_66.csv\n")
     workload_file.write("./build/benchmark --keys_file="+keysFile+"--keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=1 --lookup_distribution=zipf --print_batch_stats >> teste_100.csv\n")
-    workload_file.write("chmod +x runWorkload.sh\n")
     workload_file.write("\n\necho 'Finished workload for "+keysFile+"'\n")
 finally:
     workload_file.close()
