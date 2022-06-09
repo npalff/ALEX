@@ -13,7 +13,7 @@ std::map<std::string, std::string> parse_flags(int argc, char** argv) {
     size_t equals = arg.find("=");
     size_t dash = arg.find("--");
     if (dash != 0) {
-      //std::cout << "Bad flag '" << argv[i] << "'. Expected --key=value"
+      std::cout << "Bad flag '" << argv[i] << "'. Expected --key=value"
                 << std::endl;
       continue;
     }
@@ -45,7 +45,7 @@ std::string get_required(const std::map<std::string, std::string>& m,
                          const std::string& key) {
   auto it = m.find(key);
   if (it == m.end()) {
-    //std::cout << "Required flag --" << key << " was not found" << std::endl;
+    std::cout << "Required flag --" << key << " was not found" << std::endl;
   }
   return it->second;
 }
@@ -66,7 +66,7 @@ std::vector<std::string> get_comma_separated(
   std::string val;
   while (std::getline(s, val, ',')) {
     vals.push_back(val);
-    //std::cout << "parsed csv val " << val << std::endl;
+    std::cout << "parsed csv val " << val << std::endl;
   }
   return vals;
 }
