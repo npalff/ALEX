@@ -16,8 +16,8 @@
 //#define KEY_TYPE double
 //#define PAYLOAD_TYPE double
 
-#define KEY_TYPE uint8_t
-#define PAYLOAD_TYPE uint8_t
+#define KEY_TYPE uint64_t
+#define PAYLOAD_TYPE uint64_t
 
 
 //#define KEY_TYPE long long int
