@@ -46,17 +46,17 @@ try:
     #workload_file.write("./build/benchmark --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=1 --lookup_distribution=zipf --print_batch_stats >> alex_"+benchmarkFile+"_100.csv\n")
     workload_file.write("\n\n")
     workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_0.csv\n")
-    
+    workload_file.write("\necho 'Finished 0 percent insertion '\n\n")
     workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.05 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_5.csv\n")
-    
+    workload_file.write("\necho 'Finished 5 percent insertion '\n\n")
     workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.33 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_33.csv\n")
-    
+    workload_file.write("\necho 'Finished 33 percent insertion '\n\n")
     workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.5 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_50.csv\n")
-    
+    workload_file.write("\necho 'Finished 50 percent insertion '\n\n")
     workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.66 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_66.csv\n")
-    
+    workload_file.write("\necho 'Finished 66 percent insertion '\n\n")
     workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=1 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_100.csv\n")
-   
+    workload_file.write("\necho 'Finished 100 percent insertion '\n\n")
     workload_file.write("\n\necho 'Finished workload for "+keysFile+"'\n")
 finally:
     workload_file.close()
