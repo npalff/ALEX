@@ -57,6 +57,7 @@ class LIPP
         return std::min(node->num_items - 1, static_cast<int>(v));
     }
 
+
     static void remove_last_bit(bitmap_t& bitmap_item) {
         bitmap_item -= 1 << BITMAP_NEXT_1(bitmap_item);
     }
