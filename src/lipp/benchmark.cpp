@@ -196,6 +196,8 @@ int main(int argc, char* argv[]) {
 
   long long cumulative_operations = cumulative_lookups + cumulative_inserts;
   double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
+  
+  /*
   std::cout << "Cumulative stats: " << batch_no << " batches, "
             << cumulative_operations << " ops (" << cumulative_lookups
             << " lookups, " << cumulative_inserts << " inserts)"
@@ -206,7 +208,7 @@ int main(int argc, char* argv[]) {
             << " inserts/sec,\t"
             << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
             << std::endl;
-
+  */
   delete[] keys;
   delete[] values;
 }
