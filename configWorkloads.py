@@ -4,8 +4,9 @@ import sys
 benchmarkFile=""
 try:
     benchmarkFile = sys.argv[1]
+    LI_system = sys.argv[2]
 except:
-    print("Command: python configWorkloads.py [benchmark ID]")
+    print("Command: python configWorkloads.py [benchmark ID] [LI system]")
 GD_ID=""
 keysFile=""
 
@@ -26,6 +27,16 @@ else:
     print("Possible workloads:long, longlat, lognormal, ycsb" )
 
 
+if LI_system == "lipp":
+    filePath = "/ALEX/lipp_"
+elif LI_system == "alex":
+    filePath = "/ALEX/alex_"
+elif LI_system == "pgm":
+    filePath = "/ALEX/pgm_"
+else:
+    print("Possible systems:lipp, alex, pgm" )
+
+
 '''
 print("=========================")
 print("GD_ID:   "+ GD_ID)
@@ -38,25 +49,22 @@ try:
     workload_file.write("\n\n\n")
     workload_file.write("gdown "+GD_ID+"\n")
     workload_file.write("\n\n")
-    #workload_file.write("./build/benchmark --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0 --lookup_distribution=zipf --print_batch_stats >> alex_"+benchmarkFile+"_0.csv\n")
-    #workload_file.write("./build/benchmark --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.05 --lookup_distribution=zipf --print_batch_stats >> alex_"+benchmarkFile+"_5.csv\n")
-    #workload_file.write("./build/benchmark --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.33 --lookup_distribution=zipf --print_batch_stats >> alex_"+benchmarkFile+"_33.csv\n")
-    #workload_file.write("./build/benchmark --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.5 --lookup_distribution=zipf --print_batch_stats >> alex_"+benchmarkFile+"_50.csv\n")
-    #workload_file.write("./build/benchmark --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.66 --lookup_distribution=zipf --print_batch_stats >> alex_"+benchmarkFile+"_66.csv\n")
-    #workload_file.write("./build/benchmark --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=1 --lookup_distribution=zipf --print_batch_stats >> alex_"+benchmarkFile+"_100.csv\n")
-    workload_file.write("\n\n")
-    workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_0.csv\n")
+    
+    ########  ALEX  ########
+    
+    workload_file.write("./build/"+ LI_system +" --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0 --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_0.csv\n")
     workload_file.write("\necho 'Finished 0 percent insertion '\n\n")
-    workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.05 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_5.csv\n")
+    workload_file.write("./build/"+ LI_system +" --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.05 --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_5.csv\n")
     workload_file.write("\necho 'Finished 5 percent insertion '\n\n")
-    workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.33 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_33.csv\n")
+    workload_file.write("./build/"+ LI_system +" --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.33 --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_33.csv\n")
     workload_file.write("\necho 'Finished 33 percent insertion '\n\n")
-    workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.5 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_50.csv\n")
+    workload_file.write("./build/"+ LI_system +" --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.5 --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_50.csv\n")
     workload_file.write("\necho 'Finished 50 percent insertion '\n\n")
-    workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.66 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_66.csv\n")
+    workload_file.write("./build/"+ LI_system +" --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=0.66 --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_66.csv\n")
     workload_file.write("\necho 'Finished 66 percent insertion '\n\n")
-    workload_file.write("./build/lipp --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=1 --lookup_distribution=zipf --print_batch_stats >> lipp_"+benchmarkFile+"_100.csv\n")
+    workload_file.write("./build/"+ LI_system +" --keys_file="+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac=1 --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_100.csv\n")
     workload_file.write("\necho 'Finished 100 percent insertion '\n\n")
-    workload_file.write("\n\necho 'Finished workload for "+keysFile+"'\n")
+    workload_file.write("\n\n")
+ 
 finally:
     workload_file.close()
