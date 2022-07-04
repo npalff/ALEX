@@ -196,6 +196,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
+/*
   long long cumulative_operations = cumulative_lookups + cumulative_inserts;
   double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
   
@@ -210,6 +211,7 @@ int main(int argc, char* argv[]) {
             << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
             << std::endl;
 
+*/
   delete[] keys;
   delete[] values;
 }
