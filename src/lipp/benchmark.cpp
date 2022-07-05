@@ -22,12 +22,12 @@
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
-#define KEY_TYPE double
-#define PAYLOAD_TYPE double
+//#define KEY_TYPE double
+//#define PAYLOAD_TYPE double
 
 // Lognormal dataload
-//#define KEY_TYPE int64_t
-//#define PAYLOAD_TYPE int64_t
+#define KEY_TYPE int64_t
+#define PAYLOAD_TYPE int64_t
 
 // YCSB dataload
 //#define KEY_TYPE uint64_t
@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 
   auto workload_start_time = std::chrono::high_resolution_clock::now();
   int batch_no = 0;
-  PAYLOAD_TYPE sum = 0;
+  //PAYLOAD_TYPE sum = 0;
   std::cout << std::scientific;
   std::cout << std::setprecision(3);
   while (true) {
@@ -122,12 +122,14 @@ int main(int argc, char* argv[]) {
         return 1;
       }
       auto lookups_start_time = std::chrono::high_resolution_clock::now();
+      /*
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
-        //PAYLOAD_TYPE* payload = lipp.get_payload(key); 
-        //if (payload) {
-        //  sum += *payload;
-        //}
+        PAYLOAD_TYPE* payload = lipp.get_payload(key); 
+        if (payload) {
+          sum += *payload;
+        }
+      */
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
       batch_lookup_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
