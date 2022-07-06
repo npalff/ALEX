@@ -53,6 +53,13 @@ try:
    # workload_file.write("\n\n")
     
     ########  ALEX  ########
+    
+    ### Warmup
+    for i in range(4):
+        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats\n")
+        workload_file.write("\necho 'Finished Warmup "+str(i+1)+"'\n\n")
+    ### Experiment
+    
     for i in range(int(itNumber)):    
         workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_"+experiment+"_"+str(i+1)+".csv\n")
         workload_file.write("\necho 'Finished experiment "+str(i+1)+"'\n\n")
