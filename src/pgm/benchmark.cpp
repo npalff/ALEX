@@ -12,13 +12,6 @@
 #include "flags.h"
 #include "utils.h"
 
-
-// LIPP libraries
-#include "../core/lipp.h"
-#include <iostream>
-#include <vector>
-#include <cassert>
-
 // PGM libraries
 #include "../core/pgm/pgm_index_dynamic.hpp"
 
@@ -90,10 +83,11 @@ int main(int argc, char* argv[]) {
 
  
   // Create PGM and bulk load
-  LIPP<KEY_TYPE, PAYLOAD_TYPE> lipp;
+  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm();
   std::sort(values, values + init_num_keys,
             [](auto const& a, auto const& b) { return a.first < b.first; });
-  lipp.bulk_load(values, init_num_keys);
+  
+  // BULKLOAD PGM
 
   // Run workload
   int i = init_num_keys;
@@ -148,7 +142,7 @@ int main(int argc, char* argv[]) {
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
     for (; i < num_keys_after_batch; i++) {
-      lipp.insert(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
+      dynamic_pgm.insert_or_assign(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
     }
     auto inserts_end_time = std::chrono::high_resolution_clock::now();
     double batch_insert_time =

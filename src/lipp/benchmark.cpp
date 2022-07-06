@@ -126,11 +126,10 @@ int main(int argc, char* argv[]) {
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
         
-        /*
         PAYLOAD_TYPE* payload = lipp.get_payload(key); 
         if (payload) {
           sum += *payload;   
-        */
+        
         }
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
@@ -210,11 +209,11 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  /*
-  //long long cumulative_operations = cumulative_lookups + cumulative_inserts;
-  //double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
   
-
+  long long cumulative_operations = cumulative_lookups + cumulative_inserts;
+  double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
+  
+ /*
   std::cout << "Cumulative stats: " << batch_no << " batches, "
             << cumulative_operations << " ops (" << cumulative_lookups
             << " lookups, " << cumulative_inserts << " inserts)"
