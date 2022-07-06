@@ -125,13 +125,14 @@ int main(int argc, char* argv[]) {
       
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
-        /*
-        PAYLOAD_TYPE* payload = lipp.get_payload(key); 
+        
+        PAYLOAD_TYPE* payload = lipp.at(key); 
+
         if (payload) {
           sum += *payload;   
         
         }
-        */
+       
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
       batch_lookup_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
