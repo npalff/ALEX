@@ -88,6 +88,11 @@ int main(int argc, char* argv[]) {
             [](auto const& a, auto const& b) { return a.first < b.first; });
   
   // BULKLOAD PGM
+  int BL_index_temp=0;
+  for (; BL_index_temp < init_num_keys; BL_index_temp++) {
+      dynamic_pgm.insert_or_assign(values[BL_index_temp].first, values[BL_index_temp].second);
+    }
+
 
   // Run workload
   int i = init_num_keys;
@@ -122,10 +127,12 @@ int main(int argc, char* argv[]) {
       auto lookups_start_time = std::chrono::high_resolution_clock::now();
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
-        //PAYLOAD_TYPE* payload = lipp.get_payload(key); 
-        //if (payload) {
-        //  sum += *payload;
-        //}
+        /*
+        PAYLOAD_TYPE* payload = dynamic_pgm.find(key); 
+        if (payload) {
+          sum += *payload;
+        }
+        */
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
       batch_lookup_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -189,7 +196,7 @@ int main(int argc, char* argv[]) {
     }
 
         */
-
+/*
     // Check for workload end conditions
     if (num_actual_inserts < num_inserts_per_batch) {
       // End if we have inserted all keys in a workload with inserts
@@ -206,8 +213,8 @@ int main(int argc, char* argv[]) {
 
   long long cumulative_operations = cumulative_lookups + cumulative_inserts;
   double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
+  */
   
-  /*
   std::cout << "Cumulative stats: " << batch_no << " batches, "
             << cumulative_operations << " ops (" << cumulative_lookups
             << " lookups, " << cumulative_inserts << " inserts)"
@@ -218,7 +225,8 @@ int main(int argc, char* argv[]) {
             << " inserts/sec,\t"
             << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
             << std::endl;
-  */
+  
   delete[] keys;
   delete[] values;
+  
 }

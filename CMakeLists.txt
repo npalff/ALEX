@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(alex)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # Define the macro ‘DEBUG' in the debug mode
 if(CMAKE_BUILD_TYPE STREQUAL Debug)        
@@ -22,6 +22,7 @@ include_directories(src/core)
 add_executable(lipp src/lipp/benchmark.cpp)
 add_executable(example src/examples/main.cpp)
 add_executable(alex src/benchmark/main.cpp)
+add_executable(pgm src/pgm/benchmark.cpp)
 
 set(DOCTEST_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/doctest)
 file(DOWNLOAD
