@@ -126,7 +126,8 @@ int main(int argc, char* argv[]) {
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
         
-        PAYLOAD_TYPE* payload = lipp.at(key); 
+        PAYLOAD_TYPE payload_temp = lipp.at(key);
+        PAYLOAD_TYPE* payload = &payload_temp; 
 
         if (payload) {
           sum += *payload;   
