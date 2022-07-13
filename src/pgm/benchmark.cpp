@@ -88,10 +88,10 @@ int main(int argc, char* argv[]) {
             [](auto const& a, auto const& b) { return a.first < b.first; });
   
   // BULKLOAD PGM
-  int BL_index_temp=0;
-  for (; BL_index_temp < init_num_keys; BL_index_temp++) {
-      dynamic_pgm.insert_or_assign(values[BL_index_temp].first, values[BL_index_temp].second);
-    }
+  //int BL_index_temp=0;
+  //for (; BL_index_temp < init_num_keys; BL_index_temp++) {
+  //    dynamic_pgm.insert_or_assign(&(values[BL_index_temp].first), &(values[BL_index_temp].second));
+  // }
 
 
   // Run workload
@@ -127,12 +127,12 @@ int main(int argc, char* argv[]) {
       auto lookups_start_time = std::chrono::high_resolution_clock::now();
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
-        /*
-        PAYLOAD_TYPE* payload = dynamic_pgm.find(key); 
-        if (payload) {
-          sum += *payload;
-        }
-        */
+
+        //PAYLOAD_TYPE* payload = dynamic_pgm.find(key); 
+        //if (payload) {
+        //  sum += *payload;
+        //}
+
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
       batch_lookup_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -148,9 +148,11 @@ int main(int argc, char* argv[]) {
         std::min(num_inserts_per_batch, total_num_keys - i);
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
+    
     for (; i < num_keys_after_batch; i++) {
       dynamic_pgm.insert_or_assign(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
     }
+
     auto inserts_end_time = std::chrono::high_resolution_clock::now();
     double batch_insert_time =
         std::chrono::duration_cast<std::chrono::nanoseconds>(inserts_end_time -
