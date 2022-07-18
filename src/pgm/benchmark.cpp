@@ -78,20 +78,9 @@ int main(int argc, char* argv[]) {
  // std::sort(values.begin(), values.end());
 
     std::vector<std::pair<KEY_TYPE, PAYLOAD_TYPE>> values(init_num_keys);
+    std::mt19937_64 gen_payload(std::random_device{}());
     std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
     std::sort(values.begin(), values.end());
-
-/*
-
-    // Generate some random key-value pairs to bulk-load the Dynamic PGM-index
-    std::vector<std::pair<uint32_t, uint32_t>> data(1000000);
-    std::generate(data.begin(), data.end(), [] { return std::make_pair(std::rand(), std::rand()); });
-    std::sort(data.begin(), data.end());
-
-    // Construct and bulk-load the Dynamic PGM-index
-    pgm::DynamicPGMIndex<uint32_t, uint32_t> dynamic_pgm(data.begin(), data.end());
-
-*/
 
  
   // Create PGM and bulk load
@@ -189,56 +178,7 @@ int main(int argc, char* argv[]) {
                 << cumulative_operations / cumulative_time * 1e9 
                 << std::endl;
      }
-
-       /* 
-      << "Batch " << batch_no
-                << ", cumulative ops: " << cumulative_operations
-                << "\n\tbatch throughput:\t"
-                << num_lookups_per_batch / batch_lookup_time * 1e9
-                << " lookups/sec,\t"
-                << num_actual_inserts / batch_insert_time * 1e9
-                << " inserts/sec,\t" << num_batch_operations / batch_time * 1e9
-                << " ops/sec"
-                << "\n\tcumulative throughput:\t"
-                << cumulative_lookups / cumulative_lookup_time * 1e9
-                << " lookups/sec,\t"
-                << cumulative_inserts / cumulative_insert_time * 1e9
-                << " inserts/sec,\t"
-                << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
-                << std::endl;
-    }
-
-        */
-/*
-    // Check for workload end conditions
-    if (num_actual_inserts < num_inserts_per_batch) {
-      // End if we have inserted all keys in a workload with inserts
-      break;
-    }
-    double workload_elapsed_time =
-        std::chrono::duration_cast<std::chrono::nanoseconds>(
-            std::chrono::high_resolution_clock::now() - workload_start_time)
-            .count();
-    if (workload_elapsed_time > time_limit * 1e9 * 60) {
-      break;
-    }
   }
-
-  long long cumulative_operations = cumulative_lookups + cumulative_inserts;
-  double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
-  */
-  
-  std::cout << "Cumulative stats: " << batch_no << " batches, "
-            << cumulative_operations << " ops (" << cumulative_lookups
-            << " lookups, " << cumulative_inserts << " inserts)"
-            << "\n\tcumulative throughput:\t"
-            << cumulative_lookups / cumulative_lookup_time * 1e9
-            << " lookups/sec,\t"
-            << cumulative_inserts / cumulative_insert_time * 1e9
-            << " inserts/sec,\t"
-            << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
-            << std::endl;
-  
   delete[] keys;
   delete[] values;
   
