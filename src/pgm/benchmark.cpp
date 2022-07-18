@@ -77,9 +77,9 @@ int main(int argc, char* argv[]) {
  // std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
  // std::sort(values.begin(), values.end());
 
-    std::vector<std::pair<KEY_TYPE, PAYLOAD_TYPE>> data(init_num_keys);
-    std::generate(data.begin(), data.end(), [] { return std::make_pair(std::rand(), std::rand()); });
-    std::sort(data.begin(), data.end());
+    std::vector<std::pair<KEY_TYPE, PAYLOAD_TYPE>> values(init_num_keys);
+    std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
+    std::sort(values.begin(), values.end());
 
 /*
 
