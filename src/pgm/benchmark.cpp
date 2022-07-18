@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /*
- * Simple benchmark that runs a mixture of point lookups and inserts on ALEX.
+ * Simple benchmark that runs a mixture of point lookups and inserts on PGM.
  */
 
 #include "../core/alex.h"
@@ -74,18 +74,26 @@ int main(int argc, char* argv[]) {
 
   // Combine bulk loaded keys with randomly generated payloads
   auto values = new std::pair<KEY_TYPE, PAYLOAD_TYPE>[init_num_keys];
-  std::mt19937_64 gen_payload(std::random_device{}());
-  for (int i = 0; i < init_num_keys; i++) {
-    values[i].first = keys[i];
-    values[i].second = static_cast<PAYLOAD_TYPE>(gen_payload());
-  }
+  std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
+  std::sort(values.begin(), values.end());
 
+
+/*
+
+    // Generate some random key-value pairs to bulk-load the Dynamic PGM-index
+    std::vector<std::pair<uint32_t, uint32_t>> data(1000000);
+    std::generate(data.begin(), data.end(), [] { return std::make_pair(std::rand(), std::rand()); });
+    std::sort(data.begin(), data.end());
+
+    // Construct and bulk-load the Dynamic PGM-index
+    pgm::DynamicPGMIndex<uint32_t, uint32_t> dynamic_pgm(data.begin(), data.end());
+
+*/
 
  
   // Create PGM and bulk load
-  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm();
-  std::sort(values, values + init_num_keys,
-            [](auto const& a, auto const& b) { return a.first < b.first; });
+  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm(values.begin(), values.end());
+  
   
   // BULKLOAD PGM
   //int BL_index_temp=0;
