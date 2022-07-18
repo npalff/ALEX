@@ -22,12 +22,12 @@
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
-#define KEY_TYPE double
-#define PAYLOAD_TYPE double
+//#define KEY_TYPE double
+//#define PAYLOAD_TYPE double
 
 // Lognormal dataload
-//#define KEY_TYPE int64_t
-//#define PAYLOAD_TYPE int64_t
+#define KEY_TYPE int64_t
+#define PAYLOAD_TYPE int64_t
 
 // YCSB dataload
 //#define KEY_TYPE uint64_t
