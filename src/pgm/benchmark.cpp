@@ -128,10 +128,10 @@ int main(int argc, char* argv[]) {
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
 
-        //PAYLOAD_TYPE* payload = dynamic_pgm.find(key); 
-        //if (payload) {
-        //  sum += *payload;
-        //}
+        PAYLOAD_TYPE* payload = dynamic_pgm.find(key); 
+        if (payload) {
+          sum += *payload;
+        }
 
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
@@ -180,6 +180,6 @@ int main(int argc, char* argv[]) {
      }
   }
   delete[] keys;
-  delete[] values;
+  delete[] &values;
   
 }
