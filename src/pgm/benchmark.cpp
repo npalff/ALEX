@@ -128,10 +128,10 @@ int main(int argc, char* argv[]) {
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
 
-        PAYLOAD_TYPE* payload = dynamic_pgm.find(key); 
-        if (payload) {
-          sum += *payload;
-        }
+       // PAYLOAD_TYPE* payload = dynamic_pgm.find(key); 
+       // if (payload) {
+       //   sum += *payload;
+       // }
 
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
@@ -177,8 +177,25 @@ int main(int argc, char* argv[]) {
                 << cumulative_inserts / cumulative_insert_time * 1e9 <<","
                 << cumulative_operations / cumulative_time * 1e9 
                 << std::endl;
-     }
+
+    // Check for workload end conditions
+    if (num_actual_inserts < num_inserts_per_batch) {
+      // End if we have inserted all keys in a workload with inserts
+      break;
+    }
+    double workload_elapsed_time =
+        std::chrono::duration_cast<std::chrono::nanoseconds>(
+            std::chrono::high_resolution_clock::now() - workload_start_time)
+            .count();
+    if (workload_elapsed_time > time_limit * 1e9 * 60) {
+      break;
+    }
   }
+  }
+
+
+
+
   delete[] keys;
   delete[] &values;
   
