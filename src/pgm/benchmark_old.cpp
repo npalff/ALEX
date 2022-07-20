@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /*
- * Simple benchmark that runs a mixture of point lookups and inserts on ALEX.
+ * Simple benchmark that runs a mixture of point lookups and inserts on PGM.
  */
 
 #include "../core/alex.h"
@@ -11,6 +11,11 @@
 
 #include "flags.h"
 #include "utils.h"
+
+// PGM libraries
+#include "../core/pgm/pgm_index_dynamic.hpp"
+
+
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
@@ -24,6 +29,7 @@
 // YCSB dataload
 //#define KEY_TYPE uint64_t
 //#define PAYLOAD_TYPE uint64_t
+
 
 
 /*
@@ -67,18 +73,26 @@ int main(int argc, char* argv[]) {
   }
 
   // Combine bulk loaded keys with randomly generated payloads
-  auto values = new std::pair<KEY_TYPE, PAYLOAD_TYPE>[init_num_keys];
-  std::mt19937_64 gen_payload(std::random_device{}());
-  for (int i = 0; i < init_num_keys; i++) {
-    values[i].first = keys[i];
-    values[i].second = static_cast<PAYLOAD_TYPE>(gen_payload());
-  }
+ // auto values = new std::pair<KEY_TYPE, PAYLOAD_TYPE>[init_num_keys];
+ // std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
+ // std::sort(values.begin(), values.end());
 
-  // Create ALEX and bulk load
-  alex::Alex<KEY_TYPE, PAYLOAD_TYPE> index;
-  std::sort(values, values + init_num_keys,
-            [](auto const& a, auto const& b) { return a.first < b.first; });
-  index.bulk_load(values, init_num_keys);
+    std::vector<std::pair<KEY_TYPE, PAYLOAD_TYPE>> values(init_num_keys);
+    std::mt19937_64 gen_payload(std::random_device{}());
+    std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
+    std::sort(values.begin(), values.end());
+
+ 
+  // Create PGM and bulk load
+  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm(values.begin(), values.end());
+  
+  
+  // BULKLOAD PGM
+  //int BL_index_temp=0;
+  //for (; BL_index_temp < init_num_keys; BL_index_temp++) {
+  //    dynamic_pgm.insert_or_assign(&(values[BL_index_temp].first), &(values[BL_index_temp].second));
+  // }
+
 
   // Run workload
   int i = init_num_keys;
@@ -113,10 +127,12 @@ int main(int argc, char* argv[]) {
       auto lookups_start_time = std::chrono::high_resolution_clock::now();
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
-        PAYLOAD_TYPE* payload = index.get_payload(key);
+
+        PAYLOAD_TYPE* payload = dynamic_pgm.find(key); 
         if (payload) {
           sum += *payload;
         }
+
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
       batch_lookup_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -132,9 +148,11 @@ int main(int argc, char* argv[]) {
         std::min(num_inserts_per_batch, total_num_keys - i);
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
+    
     for (; i < num_keys_after_batch; i++) {
-      index.insert(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
+      dynamic_pgm.insert_or_assign(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
     }
+
     auto inserts_end_time = std::chrono::high_resolution_clock::now();
     double batch_insert_time =
         std::chrono::duration_cast<std::chrono::nanoseconds>(inserts_end_time -
@@ -159,28 +177,8 @@ int main(int argc, char* argv[]) {
                 << cumulative_inserts / cumulative_insert_time * 1e9 <<","
                 << cumulative_operations / cumulative_time * 1e9 
                 << std::endl;
-     }
 
-       /* 
-      << "Batch " << batch_no
-                << ", cumulative ops: " << cumulative_operations
-                << "\n\tbatch throughput:\t"
-                << num_lookups_per_batch / batch_lookup_time * 1e9
-                << " lookups/sec,\t"
-                << num_actual_inserts / batch_insert_time * 1e9
-                << " inserts/sec,\t" << num_batch_operations / batch_time * 1e9
-                << " ops/sec"
-                << "\n\tcumulative throughput:\t"
-                << cumulative_lookups / cumulative_lookup_time * 1e9
-                << " lookups/sec,\t"
-                << cumulative_inserts / cumulative_insert_time * 1e9
-                << " inserts/sec,\t"
-                << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
-                << std::endl;
     }
-
-        */
-
 
     // Check for workload end conditions
     if (num_actual_inserts < num_inserts_per_batch) {
@@ -196,22 +194,10 @@ int main(int argc, char* argv[]) {
     }
   }
 
-/*
-  long long cumulative_operations = cumulative_lookups + cumulative_inserts;
-  double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
-  
-  std::cout << "Cumulative stats: " << batch_no << " batches, "
-            << cumulative_operations << " ops (" << cumulative_lookups
-            << " lookups, " << cumulative_inserts << " inserts)"
-            << "\n\tcumulative throughput:\t"
-            << cumulative_lookups / cumulative_lookup_time * 1e9
-            << " lookups/sec,\t"
-            << cumulative_inserts / cumulative_insert_time * 1e9
-            << " inserts/sec,\t"
-            << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
-            << std::endl;
 
-*/
+
+
   delete[] keys;
-  delete[] values;
+  delete[] &values;
+  
 }
