@@ -11,6 +11,10 @@
 
 #include "flags.h"
 #include "utils.h"
+
+// PGM libraries
+#include "../core/pgm/pgm_index_dynamic.hpp"
+
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
@@ -117,6 +121,8 @@ int main(int argc, char* argv[]) {
         if (payload) {
           sum += *payload;
         }
+
+        
       }
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
       batch_lookup_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -161,27 +167,6 @@ int main(int argc, char* argv[]) {
                 << std::endl;
      }
 
-       /* 
-      << "Batch " << batch_no
-                << ", cumulative ops: " << cumulative_operations
-                << "\n\tbatch throughput:\t"
-                << num_lookups_per_batch / batch_lookup_time * 1e9
-                << " lookups/sec,\t"
-                << num_actual_inserts / batch_insert_time * 1e9
-                << " inserts/sec,\t" << num_batch_operations / batch_time * 1e9
-                << " ops/sec"
-                << "\n\tcumulative throughput:\t"
-                << cumulative_lookups / cumulative_lookup_time * 1e9
-                << " lookups/sec,\t"
-                << cumulative_inserts / cumulative_insert_time * 1e9
-                << " inserts/sec,\t"
-                << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
-                << std::endl;
-    }
-
-        */
-
-
     // Check for workload end conditions
     if (num_actual_inserts < num_inserts_per_batch) {
       // End if we have inserted all keys in a workload with inserts
@@ -196,22 +181,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-/*
-  long long cumulative_operations = cumulative_lookups + cumulative_inserts;
-  double cumulative_time = cumulative_lookup_time + cumulative_insert_time;
-  
-  std::cout << "Cumulative stats: " << batch_no << " batches, "
-            << cumulative_operations << " ops (" << cumulative_lookups
-            << " lookups, " << cumulative_inserts << " inserts)"
-            << "\n\tcumulative throughput:\t"
-            << cumulative_lookups / cumulative_lookup_time * 1e9
-            << " lookups/sec,\t"
-            << cumulative_inserts / cumulative_insert_time * 1e9
-            << " inserts/sec,\t"
-            << cumulative_operations / cumulative_time * 1e9 << " ops/sec"
-            << std::endl;
 
-*/
   delete[] keys;
   delete[] values;
 }
