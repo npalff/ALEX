@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
   std::cout << std::setprecision(3);
   int debug_temp=0;
   while (true) {
-    std::cout << "Start iter "<< debug_temp;
+    std::cout << "Start iter "<< debug_temp<<"\n";
     batch_no++;
 
     // Do lookups
@@ -134,15 +134,15 @@ int main(int argc, char* argv[]) {
       for (int j = 0; j < num_lookups_per_batch; j++) {
         KEY_TYPE key = lookup_keys[j];
         
-        PAYLOAD_TYPE* payload = dynamic_pgm.find(key);
+        //PAYLOAD_TYPE* payload = dynamic_pgm.find(key);
 
-        if (payload) {
-          sum += *payload;   
+        //if (payload) {
+        //  sum += *payload;   
         
-        }
+        //}
        
       }
-      std::cout << "LOOKUP "<<debug_temp<<" Done";
+      std::cout << "LOOKUP "<<debug_temp<<" Done\n";
       
 
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
@@ -155,8 +155,8 @@ int main(int argc, char* argv[]) {
     }
 
     // Do inserts
-    int num_actual_inserts =
-        std::min(num_inserts_per_batch, total_num_keys - i);
+    int num_actual_inserts = std::min(num_inserts_per_batch, total_num_keys - i);
+    std::cout<<"NUM ACTUAL UPDATE: " << num_actual_inserts<<"\n";
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
     for (; i < num_keys_after_batch; i++) {
@@ -169,7 +169,7 @@ int main(int argc, char* argv[]) {
             .count();
     cumulative_insert_time += batch_insert_time;
     cumulative_inserts += num_actual_inserts;
-    std::cout << "INSERTS "<< debug_temp <<" DONE\n\n\n";
+    std::cout << "INSERTS "<< debug_temp <<" DONE\n";
     debug_temp++;
 
   /* UNCOMMENT
@@ -218,8 +218,8 @@ int main(int argc, char* argv[]) {
         */
 
     // Check for workload end conditions
-    std::cout << num_actual_inserts;
-    std::cout << num_inserts_per_batch;
+    std::cout << "num_actual_inserts: " <<num_actual_inserts<<"\n";
+    std::cout << "num_inserts_per_batch: " << num_inserts_per_batch<<"\n\n";
 
     if (num_actual_inserts < num_inserts_per_batch) {
       // End if we have inserted all keys in a workload with inserts
