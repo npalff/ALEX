@@ -73,6 +73,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  std::cout << "Load File - done \n";
+
  // Combine bulk loaded keys with randomly generated payloads
  // auto values = new std::pair<KEY_TYPE, PAYLOAD_TYPE>[init_num_keys];
  // std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
@@ -87,7 +89,7 @@ int main(int argc, char* argv[]) {
   // Create PGM and bulk load
   pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm(values.begin(), values.end());
   
-  
+  std::cout << "Bulkload Done \n";
   // BULKLOAD PGM
   //int BL_index_temp=0;
   //for (; BL_index_temp < init_num_keys; BL_index_temp++) {
@@ -109,7 +111,9 @@ int main(int argc, char* argv[]) {
   PAYLOAD_TYPE sum = 0;
   std::cout << std::scientific;
   std::cout << std::setprecision(3);
+  int debug_temp=0;
   while (true) {
+    std::cout << "Start iter "<< debug_temp;
     batch_no++;
 
     // Do lookups
@@ -138,6 +142,9 @@ int main(int argc, char* argv[]) {
         }
        
       }
+      std::cout << "LOOKUP "<<debug_temp<<" Done";
+      
+
       auto lookups_end_time = std::chrono::high_resolution_clock::now();
       batch_lookup_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
                               lookups_end_time - lookups_start_time)
@@ -162,7 +169,10 @@ int main(int argc, char* argv[]) {
             .count();
     cumulative_insert_time += batch_insert_time;
     cumulative_inserts += num_actual_inserts;
+    std::cout << "INSERTS "<< debug_temp <<" DONE\n\n\n";
+    debug_temp++;
 
+  /* UNCOMMENT
     if (print_batch_stats) {
       if(batch_no==1)
         std::cout << "batch no, cumulative ops, batch lookup throughput (lookups/sec), batch insert throughput (inserts/sec), batch operation throughput (ops.sec), cumulative lookup throughput (lookups/sec), cumulative insert throughput (inserts/sec), cumulative operation throughput (ops.sec)"<< std::endl;
@@ -180,6 +190,12 @@ int main(int argc, char* argv[]) {
                 << cumulative_operations / cumulative_time * 1e9 
                 << std::endl;
      }
+
+  */
+
+
+
+
 
        /* 
       << "Batch " << batch_no
@@ -202,6 +218,9 @@ int main(int argc, char* argv[]) {
         */
 
     // Check for workload end conditions
+    std::cout << num_actual_inserts;
+    std::cout << num_inserts_per_batch;
+
     if (num_actual_inserts < num_inserts_per_batch) {
       // End if we have inserted all keys in a workload with inserts
       break;
@@ -214,6 +233,7 @@ int main(int argc, char* argv[]) {
       break;
     }
   }
+
 
   
   //long long cumulative_operations = cumulative_lookups + cumulative_inserts;
