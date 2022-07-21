@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
         KEY_TYPE key = lookup_keys[j];
         
         //PAYLOAD_TYPE* payload = dynamic_pgm.find(key);
-
+        auto payload = dynamic_pgm.find(key);
         //if (payload) {
         //  sum += *payload;   
         
@@ -156,6 +156,9 @@ int main(int argc, char* argv[]) {
 
     // Do inserts
     int num_actual_inserts = std::min(num_inserts_per_batch, total_num_keys - i);
+    std::cout<<"i: " << i<<"\n";
+    std::cout<< "num_inserts_per_batch " << num_inserts_per_batch << "\n";
+    std::cout<< "total_num_keys " << total_num_keys << "\n";
     std::cout<<"NUM ACTUAL UPDATE: " << num_actual_inserts<<"\n";
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
