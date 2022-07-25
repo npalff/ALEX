@@ -196,7 +196,7 @@ int main(int argc, char* argv[]) {
             std::chrono::high_resolution_clock::now() - workload_start_time)
             .count();
     std::cout << "Workload time " << workload_elapsed_time << "\n";
-    std::cout << "NOW " << std::chrono::high_resolution_clock::now() << "\n";
+    std::cout << "workload started time " << workload_start_time << "\n";
     
     if (workload_elapsed_time > time_limit * 1e9 * 60) {
       std::cout << "END BY TIME" << "\n\n\n";
