@@ -132,12 +132,12 @@ int main(int argc, char* argv[]) {
         KEY_TYPE key = lookup_keys[j];
         
         //PAYLOAD_TYPE* payload = dynamic_pgm.find(key);
-        pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE>::Iterator payload = dynamic_pgm.find(key);
+        auto payload = dynamic_pgm.find(key);
 
-        if (payload) {
-          sum += payload.K();   
+        //if (payload) {
+        //  sum += payload.K();   
         
-        }
+        //}
        
       }
       
