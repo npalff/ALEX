@@ -133,6 +133,13 @@ int main(int argc, char* argv[]) {
         
         //PAYLOAD_TYPE* payload = dynamic_pgm.find(key);
         auto payload = dynamic_pgm.find(key);
+        for(auto payloadtemp = payload.begin(); payloadtemp!=payload.end();payloadtemp++)
+        {
+          
+        }
+
+
+
         //if (payload) {
         //  sum += *payload;   
         
