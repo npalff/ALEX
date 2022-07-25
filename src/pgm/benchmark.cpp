@@ -160,6 +160,7 @@ int main(int argc, char* argv[]) {
     std::cout<< "num_inserts_per_batch " << num_inserts_per_batch << "\n";
     std::cout<< "total_num_keys " << total_num_keys << "\n";
     std::cout<<"NUM ACTUAL UPDATE: " << num_actual_inserts<<"\n";
+    
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
     for (; i < num_keys_after_batch; i++) {
@@ -226,13 +227,18 @@ int main(int argc, char* argv[]) {
 
     if (num_actual_inserts < num_inserts_per_batch) {
       // End if we have inserted all keys in a workload with inserts
+      std::cout << "END BY NUM INSERTS" << "\n\n\n";
       break;
     }
     double workload_elapsed_time =
         std::chrono::duration_cast<std::chrono::nanoseconds>(
             std::chrono::high_resolution_clock::now() - workload_start_time)
             .count();
+    std::cout << "Workload time " << workload_elapsed_time << "\n";
+    std::cout << "NOW " << std::chrono::high_resolution_clock::now() << "\n";
+    
     if (workload_elapsed_time > time_limit * 1e9 * 60) {
+      std::cout << "END BY TIME" << "\n\n\n";
       break;
     }
   }
