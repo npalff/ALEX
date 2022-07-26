@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
 
  
   // Create PGM and bulk load
-  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm(values.begin(), values.end());
+  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm();
   
   // BULKLOAD PGM
   //int BL_index_temp=0;
