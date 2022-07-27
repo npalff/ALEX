@@ -20,16 +20,16 @@
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
-//#define KEY_TYPE double
-//#define PAYLOAD_TYPE double
+#define KEY_TYPE double
+#define PAYLOAD_TYPE double
 
 // Lognormal dataload
 //#define KEY_TYPE int64_t
 //#define PAYLOAD_TYPE int64_t
 
 // YCSB dataload
-#define KEY_TYPE uint64_t
-#define PAYLOAD_TYPE uint64_t
+//#define KEY_TYPE uint64_t
+//#define PAYLOAD_TYPE uint64_t
 
 
 
@@ -83,10 +83,10 @@ int main(int argc, char* argv[]) {
     std::mt19937_64 gen_payload(std::random_device{}());
     std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
     std::sort(values.begin(), values.end());
-
+    std::vector<std::pair<KEY_TYPE, PAYLOAD_TYPE>> initvalues(init_num_keys);
  
   // Create PGM and bulk load
-  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm(values.begin(), values.end());
+  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm(initvalues.begin(), initvalues.end());
   
   // BULKLOAD PGM
   //int BL_index_temp=0;
