@@ -20,16 +20,16 @@
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
-//#define KEY_TYPE double
-//#define PAYLOAD_TYPE double
+#define KEY_TYPE double
+#define PAYLOAD_TYPE double
 
 // Lognormal dataload
 //#define KEY_TYPE int64_t
 //#define PAYLOAD_TYPE int64_t
 
 // YCSB dataload
-#define KEY_TYPE uint64_t
-#define PAYLOAD_TYPE uint64_t
+//#define KEY_TYPE uint64_t
+//#define PAYLOAD_TYPE uint64_t
 
 
 
@@ -88,12 +88,6 @@ int main(int argc, char* argv[]) {
   // Create PGM and bulk load
   pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm(values.begin(), values.end());
   
-  // BULKLOAD PGM
-  //int BL_index_temp=0;
-  //for (; BL_index_temp < init_num_keys; BL_index_temp++) {
-  //    dynamic_pgm.insert_or_assign(&(values[BL_index_temp].first), &(values[BL_index_temp].second));
-  // }
-
 
   // Run workload
   int i = init_num_keys;
