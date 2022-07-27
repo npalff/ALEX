@@ -83,10 +83,10 @@ int main(int argc, char* argv[]) {
     std::mt19937_64 gen_payload(std::random_device{}());
     std::generate(values.begin(), values.end(), [] { return std::make_pair(std::rand(), std::rand()); });
     std::sort(values.begin(), values.end());
-
+    std::vector<std::pair<KEY_TYPE, PAYLOAD_TYPE>> initvalues(init_num_keys);
  
   // Create PGM and bulk load
-  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm();
+  pgm::DynamicPGMIndex<KEY_TYPE, PAYLOAD_TYPE> dynamic_pgm(initvalues.begin(), initvalues.end());
   
   // BULKLOAD PGM
   //int BL_index_temp=0;
