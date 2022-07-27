@@ -87,9 +87,9 @@ int main(int argc, char* argv[]) {
  
   // Create LIPP and bulk load
   LIPP<KEY_TYPE, PAYLOAD_TYPE> lipp;
-  //std::sort(values, values + init_num_keys,
-  //          [](auto const& a, auto const& b) { return a.first < b.first; });
- // lipp.bulk_load(values, init_num_keys);
+  std::sort(values, values + init_num_keys,
+            [](auto const& a, auto const& b) { return a.first < b.first; });
+  lipp.bulk_load(values, init_num_keys);
 
   // Run workload
   int i = init_num_keys;
