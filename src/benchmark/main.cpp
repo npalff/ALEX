@@ -29,6 +29,7 @@
 /*
  * Required flags:
  * --keys_file              path to the file that contains keys
+ * --insert_file            path to the file that contains keys that will be used in inserts
  * --keys_file_type         file type of keys_file (options: binary or text)
  * --init_num_keys          number of keys to bulk load with
  * --total_num_keys         total number of keys in the keys file
@@ -44,6 +45,7 @@
 int main(int argc, char* argv[]) {
   auto flags = parse_flags(argc, argv);
   std::string keys_file_path = get_required(flags, "keys_file");
+  std::string insert_keys_file_path = get_required(flags, "insert_file");
   std::string keys_file_type = get_required(flags, "keys_file_type");
   auto init_num_keys = stoi(get_required(flags, "init_num_keys"));
   auto total_num_keys = stoi(get_required(flags, "total_num_keys"));
@@ -125,6 +127,18 @@ int main(int argc, char* argv[]) {
       cumulative_lookup_time += batch_lookup_time;
       cumulative_lookups += num_lookups_per_batch;
       delete[] lookup_keys;
+    }
+
+// ============================================================================
+    //Read keys for the inserts
+    if (keys_file_type == "binary") {
+      load_binary_data(keys, total_num_keys, insert_keys_file_path);
+    } else if (keys_file_type == "text") {
+      load_text_data(keys, total_num_keys, insert_keys_file_path);
+    } else {
+      std::cerr << "--keys_file_type must be either 'binary' or 'text'"
+                << std::endl;
+      return 1;
     }
 
     // Do inserts
