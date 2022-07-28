@@ -14,8 +14,8 @@
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
-#define KEY_TYPE double
-#define PAYLOAD_TYPE double
+//#define KEY_TYPE double
+//#define PAYLOAD_TYPE double
 
 // Lognormal dataload
 //#define KEY_TYPE int64_t
@@ -24,6 +24,10 @@
 // YCSB dataload
 //#define KEY_TYPE uint64_t
 //#define PAYLOAD_TYPE uint64_t
+
+// Artificial new created dataloads
+#define KEY_TYPE int
+#define PAYLOAD_TYPE int
 
 
 /*
@@ -62,6 +66,18 @@ int main(int argc, char* argv[]) {
     load_binary_data(keys, total_num_keys, keys_file_path);
   } else if (keys_file_type == "text") {
     load_text_data(keys, total_num_keys, keys_file_path);
+  } else {
+    std::cerr << "--keys_file_type must be either 'binary' or 'text'"
+              << std::endl;
+    return 1;
+  }
+
+  //Read keys for the inserts
+  auto insert_keys = new KEY_TYPE[total_num_keys];
+  if (keys_file_type == "binary") {
+    load_binary_data(insert_keys, total_num_keys, insert_keys_file_path);
+  } else if (keys_file_type == "text") {
+    load_text_data(insert_keys, total_num_keys, insert_keys_file_path);
   } else {
     std::cerr << "--keys_file_type must be either 'binary' or 'text'"
               << std::endl;
@@ -130,24 +146,13 @@ int main(int argc, char* argv[]) {
     }
 
 // ============================================================================
-    //Read keys for the inserts
-    if (keys_file_type == "binary") {
-      load_binary_data(keys, total_num_keys, insert_keys_file_path);
-    } else if (keys_file_type == "text") {
-      load_text_data(keys, total_num_keys, insert_keys_file_path);
-    } else {
-      std::cerr << "--keys_file_type must be either 'binary' or 'text'"
-                << std::endl;
-      return 1;
-    }
-
     // Do inserts
     int num_actual_inserts =
         std::min(num_inserts_per_batch, total_num_keys - i);
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
     for (; i < num_keys_after_batch; i++) {
-      index.insert(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
+      index.insert(insert_keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
     }
     auto inserts_end_time = std::chrono::high_resolution_clock::now();
     double batch_insert_time =
