@@ -25,7 +25,7 @@ elif benchmarkFile == "lognormal":
 elif benchmarkFile == "ycsb":
     GD_ID="1Q89-v4FJLEwIKL3YY3oCeOEs0VUuv5bD"
     keysFile = "ycsb-200M.bin.data"
-elif benchmarkFile == "minMax"
+elif benchmarkFile == "minMax":
     keysFile == "dbOddsMin.txt"
     insertion_keys_file == "dbOddsMax.txt"
 else:
