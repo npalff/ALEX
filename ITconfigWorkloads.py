@@ -51,10 +51,9 @@ print("Keys File:   " + keysFile)
 print("========================\n")
 '''
 
-
+try:
     ########  ALEX  ########
-    ### Create DB
-    workload_file.write("python createdb.py "+benchmarkFile+" "+numkeys+"\n")
+    
     ### Warmup
     for i in range(4):
         workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --insert_file=../db/"+insertion_keys_file+" --keys_file_type="+keysType+" --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats\n")
@@ -82,7 +81,8 @@ try:
     workload_file.write("\n\n\n")
    # workload_file.write("gdown "+GD_ID+"\n")
    # workload_file.write("\n\n")
-
+    ### Create DB
+    workload_file.write("python createdb.py "+benchmarkFile+" "+numkeys+"\n")
     ########  ALEX  ########
     
     ### Warmup
