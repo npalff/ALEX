@@ -12,13 +12,20 @@ except:
 
 
 
-dbFile1= open("../db/dbOddsMin.txt",'w')
-dbFile2= open("../db/dbOddsMax.txt",'w')
+dbFile1= open("../db/createdDB.txt",'w')
+
+if experiment=="minMax":
+    for i in range(numkeys):
+        dbFile1.write(str(2*i+1)+"\n")
+        dbFile2.write(str(INTMAX-2*i)+"\n")
+elif experiment=="density":
+    print("hello")
+elif experiment=="primeNumbers":
+    print("hello")
+else:
+    "No experiment with this name"
 
 
-for i in range(numkeys):
-    dbFile1.write(str(2*i+1)+"\n")
-    dbFile2.write(str(INTMAX-2*i)+"\n")
+
 
 dbFile1.close()
-dbFile2.close()

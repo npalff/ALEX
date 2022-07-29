@@ -1,17 +1,19 @@
 import sys
 # sys.argv
-
+numkeys = 20000
 benchmarkFile=""
 try:
     LI_system = sys.argv[1]
     benchmarkFile = sys.argv[2]
     experiment = sys.argv[3]
     itNumber = sys.argv[4]
+    numkeys= sys.argv[5]
 except:
-    print("Command: python configWorkloads.py [LI system] [benchmark ID] [insert percentage] [Iterations number]")
+    print("Command: python configWorkloads.py [LI system] [benchmark ID] [insert percentage] [Iterations number] [number of keys]")
 GD_ID=""
 keysFile=""
 insertion_keys_file=""
+keysType="binary"
 
 if  benchmarkFile == "long":
     GD_ID="1zc90sD6Pze8UM_XYDmNjzPLqmKly8jKl"
@@ -26,8 +28,8 @@ elif benchmarkFile == "ycsb":
     GD_ID="1Q89-v4FJLEwIKL3YY3oCeOEs0VUuv5bD"
     keysFile = "ycsb-200M.bin.data"
 elif benchmarkFile == "minMax":
-    keysFile == "dbOddsMin.txt"
-    insertion_keys_file == "dbOddsMax.txt"
+    keysFile = "createdDB.txt"
+    keysType = "text"
 else:
     print("Possible workloads:long, longlat, lognormal, ycsb, minMax" )
 
@@ -49,35 +51,18 @@ print("Keys File:   " + keysFile)
 print("========================\n")
 '''
 
-### Prepare environment
-try:
-    workload_file = open("prepareContainer.sh", 'w')
-    workload_file.write("#!/bin/sh \n")
-    workload_file.write("\n\n\n")
-   # workload_file.write("gdown "+GD_ID+"\n")
-   # workload_file.write("\n\n")
-    workload_file.write("cd ./ALEX/\n")
-    workload_file.write("./build.sh\n")
-    workload_file.write("python ITconfigWorkloads.py "+LI_system+" "+benchmarkFile+" "+experiment+" "+itNumber+"\n\n")
-    workload_file.write("chmod +x runWorkload.sh\n")
-    workload_file.write("")
-    workload_file.write("")
-    workload_file.write("")
-
-
-
 
     ########  ALEX  ########
     ### Create DB
-    workload_file.write("python createdb.py "+benchmarkFile)
+    workload_file.write("python createdb.py "+benchmarkFile+" "+numkeys+"\n")
     ### Warmup
     for i in range(4):
-        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --insert_file=../db/"+insertion_keys_file+" --keys_file_type=text --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats\n")
+        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --insert_file=../db/"+insertion_keys_file+" --keys_file_type="+keysType+" --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats\n")
         workload_file.write("\necho 'Finished Warmup "+str(i+1)+"'\n\n")
     ### Experiment
     
     for i in range(int(itNumber)):    
-        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --insert_file=../db/"+insertion_keys_file+" --keys_file_type=text --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_"+experiment+"_"+str(i+1)+".csv\n")
+        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --insert_file=../db/"+insertion_keys_file+" --keys_file_type="+keysType+" --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_"+experiment+"_"+str(i+1)+".csv\n")
         workload_file.write("\necho 'Finished experiment "+str(i+1)+"'\n\n")
 
 
@@ -102,12 +87,12 @@ try:
     
     ### Warmup
     for i in range(4):
-        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats\n")
+        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type="+keysType+" --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats\n")
         workload_file.write("\necho 'Finished Warmup "+str(i+1)+"'\n\n")
     ### Experiment
     
     for i in range(int(itNumber)):    
-        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type=binary --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_"+experiment+"_"+str(i+1)+".csv\n")
+        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type="+keysType+" --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_"+experiment+"_"+str(i+1)+".csv\n")
         workload_file.write("\necho 'Finished experiment "+str(i+1)+"'\n\n")
 
 
