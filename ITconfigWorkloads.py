@@ -29,7 +29,7 @@ elif benchmarkFile == "minMax":
     keysFile == "dbOddsMin.txt"
     insertion_keys_file == "dbOddsMax.txt"
 else:
-    print("Possible workloads:long, longlat, lognormal, ycsb,minMax" )
+    print("Possible workloads:long, longlat, lognormal, ycsb, minMax" )
 
 
 if LI_system == "lipp":

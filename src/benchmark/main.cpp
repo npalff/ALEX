@@ -49,7 +49,7 @@
 int main(int argc, char* argv[]) {
   auto flags = parse_flags(argc, argv);
   std::string keys_file_path = get_required(flags, "keys_file");
-  std::string insert_keys_file_path = get_required(flags, "insert_file");
+  //std::string insert_keys_file_path = get_required(flags, "insert_file");
   std::string keys_file_type = get_required(flags, "keys_file_type");
   auto init_num_keys = stoi(get_required(flags, "init_num_keys"));
   auto total_num_keys = stoi(get_required(flags, "total_num_keys"));
@@ -72,6 +72,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  /*
   //Read keys for the inserts
   auto insert_keys = new KEY_TYPE[total_num_keys];
   if (keys_file_type == "binary") {
@@ -83,11 +84,13 @@ int main(int argc, char* argv[]) {
               << std::endl;
     return 1;
   }
+  */
 
   // Combine bulk loaded keys with randomly generated payloads
   auto values = new std::pair<KEY_TYPE, PAYLOAD_TYPE>[init_num_keys];
   std::mt19937_64 gen_payload(std::random_device{}());
   for (int i = 0; i < init_num_keys; i++) {
+    std::cout << "iterator" << i << "  ---  init key:  "<<keys[i]<<"\n";
     values[i].first = keys[i];
     values[i].second = static_cast<PAYLOAD_TYPE>(gen_payload());
   }
@@ -152,7 +155,8 @@ int main(int argc, char* argv[]) {
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
     for (; i < num_keys_after_batch; i++) {
-      index.insert(insert_keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
+      std::cout << "iterator" << i << "  ---  insert key:  "<<keys[i]<<"\n";
+      index.insert(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
     }
     auto inserts_end_time = std::chrono::high_resolution_clock::now();
     double batch_insert_time =

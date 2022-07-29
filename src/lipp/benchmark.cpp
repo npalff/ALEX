@@ -22,8 +22,8 @@
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
-#define KEY_TYPE double
-#define PAYLOAD_TYPE double
+//#define KEY_TYPE double
+//#define PAYLOAD_TYPE double
 
 // Lognormal dataload
 //#define KEY_TYPE int64_t
@@ -33,7 +33,9 @@
 //#define KEY_TYPE uint64_t
 //#define PAYLOAD_TYPE uint64_t
 
-
+// Artificial new created dataloads
+#define KEY_TYPE int
+#define PAYLOAD_TYPE int
 
 /*
  * Required flags:
@@ -79,6 +81,7 @@ int main(int argc, char* argv[]) {
   auto values = new std::pair<KEY_TYPE, PAYLOAD_TYPE>[init_num_keys];
   std::mt19937_64 gen_payload(std::random_device{}());
   for (int i = 0; i < init_num_keys; i++) {
+    std::cout << "iterator" << i << "  ---  init key:  "<<keys[i]<<"\n";
     values[i].first = keys[i];
     values[i].second = static_cast<PAYLOAD_TYPE>(gen_payload());
   }
@@ -150,6 +153,7 @@ int main(int argc, char* argv[]) {
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
     for (; i < num_keys_after_batch; i++) {
+      std::cout << "iterator" << i << "  ---  insert key:  "<<keys[i]<<"\n";
       lipp.insert(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
     }
     auto inserts_end_time = std::chrono::high_resolution_clock::now();
