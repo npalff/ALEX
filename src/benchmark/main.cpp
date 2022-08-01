@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
   auto values = new std::pair<KEY_TYPE, PAYLOAD_TYPE>[init_num_keys];
   std::mt19937_64 gen_payload(std::random_device{}());
   for (int i = 0; i < init_num_keys; i++) {
-    std::cout << "iterator" << i << "  ---  init key:  "<<keys[i]<<"\n";
+    //std::cout << "iterator" << i << "  ---  init key:  "<<keys[i]<<"\n";
     values[i].first = keys[i];
     values[i].second = static_cast<PAYLOAD_TYPE>(gen_payload());
   }
@@ -155,7 +155,7 @@ int main(int argc, char* argv[]) {
     int num_keys_after_batch = i + num_actual_inserts;
     auto inserts_start_time = std::chrono::high_resolution_clock::now();
     for (; i < num_keys_after_batch; i++) {
-      std::cout << "iterator" << i << "  ---  insert key:  "<<keys[i]<<"\n";
+      //std::cout << "iterator" << i << "  ---  insert key:  "<<keys[i]<<"\n";
       index.insert(keys[i], static_cast<PAYLOAD_TYPE>(gen_payload()));
     }
     auto inserts_end_time = std::chrono::high_resolution_clock::now();
