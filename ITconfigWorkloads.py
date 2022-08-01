@@ -62,7 +62,7 @@ try:
    # workload_file.write("gdown "+GD_ID+"\n")
    # workload_file.write("\n\n")
     ### Create DB
-    workload_file.write("python createdb.py "+benchmarkFile+" "+numkeys+"\n")
+    workload_file.write("python createDB.py "+benchmarkFile+" "+numkeys+"\n")
     ########  ALEX  ########
     
     ### Warmup

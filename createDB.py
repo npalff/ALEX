@@ -35,8 +35,8 @@ elif experiment=="primeNumbers":
     while(primeCounterAux != numkeys):
         if i>1:
             for j in range(2,i):
-                print("i:" + str(i))
-                print("j:" + str(j)+"\n")
+                #print("i:" + str(i))
+                #print("j:" + str(j)+"\n")
                 if(i%j == 0):
                     break
     
