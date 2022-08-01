@@ -1,6 +1,6 @@
 import sys
 # sys.argv
-numkeys = 20000
+numkeys = "20000000"
 benchmarkFile=""
 try:
     LI_system = sys.argv[1]
@@ -67,12 +67,12 @@ try:
     
     ### Warmup
     for i in range(4):
-        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type="+keysType+" --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats\n")
+        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type="+keysType+" --init_num_keys="+str(int(numkeys)/2)+" --total_num_keys="+numkeys+" --batch_size="+str(int(numkeys)/20)+" --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats\n")
         workload_file.write("\necho 'Finished Warmup "+str(i+1)+"'\n\n")
     ### Experiment
     
     for i in range(int(itNumber)):    
-        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type="+keysType+" --init_num_keys=10000000 --total_num_keys=20000000 --batch_size=1000000 --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_"+experiment+"_"+str(i+1)+".csv\n")
+        workload_file.write("./build/"+ LI_system +" --keys_file=../db/"+keysFile+" --keys_file_type="+keysType+" --init_num_keys="+str(int(numkeys)/2)+" --total_num_keys="+numkeys+" --batch_size="+str(int(numkeys)/20)+" --insert_frac="+str(float(experiment)/100)+" --lookup_distribution=zipf --print_batch_stats >>"+LI_system+"_"+benchmarkFile+"_"+experiment+"_"+str(i+1)+".csv\n")
         workload_file.write("\necho 'Finished experiment "+str(i+1)+"'\n\n")
 
 

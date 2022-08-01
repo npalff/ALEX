@@ -32,7 +32,7 @@ elif experiment=="primeNumbers":
     arrayAux =[]
     primeCounterAux = 0
     i=1
-    while(primeCounterAux != numkeys and INTMAX>i):
+    while(primeCounterAux != numkeys):
         if i>1:
             for j in range(2,i):
                 print("i:" + str(i))
