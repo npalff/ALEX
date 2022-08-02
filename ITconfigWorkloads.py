@@ -28,10 +28,16 @@ elif benchmarkFile == "ycsb":
     GD_ID="1Q89-v4FJLEwIKL3YY3oCeOEs0VUuv5bD"
     keysFile = "ycsb-200M.bin.data"
 elif benchmarkFile == "minMax":
-    keysFile = "createdDB.txt"
+    keysFile = "minMax.txt"
+    keysType = "text"
+elif benchmarkFile == "density":
+    keysFile = "density.txt"
+    keysType = "text"
+elif benchmarkFile == "primeNumbers":
+    keysFile = "primeNumbers.txt"
     keysType = "text"
 else:
-    print("Possible workloads:long, longlat, lognormal, ycsb, minMax" )
+    print("Possible workloads:long, longlat, lognormal, ycsb, minMax, density, primeNumbers" )
 
 
 if LI_system == "lipp":
@@ -62,7 +68,7 @@ try:
    # workload_file.write("gdown "+GD_ID+"\n")
    # workload_file.write("\n\n")
     ### Create DB
-    workload_file.write("python createDB.py "+benchmarkFile+" "+str(int(numkeys)*10)+"\necho \"DB Created\"")
+    #workload_file.write("python createDB.py "+benchmarkFile+" "+str(int(numkeys)*10)+"\necho \"DB Created\"")
     ########  ALEX  ########
     
     ### Warmup
