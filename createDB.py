@@ -35,8 +35,6 @@ elif experiment=="primeNumbers":
     while(primeCounterAux != numkeys):
         if i>1:
             for j in range(2,i):
-                #print("i:" + str(i))
-                #print("j:" + str(j)+"\n")
                 if(i%j == 0):
                     break
     
@@ -46,6 +44,29 @@ elif experiment=="primeNumbers":
                 dbFile1.write(str(i)+"\n")
         i+=1
 
+elif experiment=="repeat":
+    try:
+        number_primeNumbers = sys.argv[3]
+    except:
+        print("Missing number of prime numbers to repeat")
+    primeArray = []
+    primeCounterAux = 0
+    i=1
+    while(primeCounterAux != number_primeNumbers):
+        if i>1:
+            for j in range(2,i):
+                if(i%j == 0):
+                    break
+    
+            else:
+                primeCounterAux +=1
+                primeArray.append(i)
+                dbFile1.write(str(i)+"\n")
+        i+=1
+    print("Array size: "+str(len(primeArray)))
+    print("Array: ")
+    print(primeArray)
+    print("\n\n")
 else:
     "No experiment with this name"
 

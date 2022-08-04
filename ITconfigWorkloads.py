@@ -33,11 +33,18 @@ elif benchmarkFile == "minMax":
 elif benchmarkFile == "density":
     keysFile = "density.txt"
     keysType = "text"
-elif benchmarkFile == "primeNumbers":
-    keysFile = "primeNumbers.txt"
+elif benchmarkFile == "repeat_15":
+    keysFile = "repeat_15.txt"
     keysType = "text"
+elif benchmarkFile == "repeat_50":
+    keysFile = "repeat_50.txt"
+    keysType = "text"
+elif benchmarkFile == "repeat_100":
+    keysFile = "repeat_100.txt"
+    keysType = "text"
+
 else:
-    print("Possible workloads:long, longlat, lognormal, ycsb, minMax, density, primeNumbers" )
+    print("Possible workloads:long, longlat, lognormal, ycsb, minMax, density, primeNumbers, repeat" )
 
 
 if LI_system == "lipp":
