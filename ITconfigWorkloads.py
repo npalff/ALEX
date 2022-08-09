@@ -42,9 +42,12 @@ elif benchmarkFile == "repeat_50":
 elif benchmarkFile == "repeat_100":
     keysFile = "repeat_100.txt"
     keysType = "text"
+elif benchmarkFile == "random":
+    keysFile = "random.txt"
+    keysType = "text"
 
 else:
-    print("Possible workloads:long, longlat, lognormal, ycsb, minMax, density, primeNumbers, repeat" )
+    print("Possible workloads:long, longlat, lognormal, ycsb, minMax, density, primeNumbers, repeat, random" )
 
 
 if LI_system == "lipp":
