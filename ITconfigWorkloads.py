@@ -45,6 +45,9 @@ elif benchmarkFile == "repeat_100":
 elif benchmarkFile == "random":
     keysFile = "random.txt"
     keysType = "text"
+elif benchmarkFile == "shipDates":
+    keysFile = "shipDates.txt"
+    keysType = "text"
 
 else:
     print("Possible workloads:long, longlat, lognormal, ycsb, minMax, density, primeNumbers, repeat, random" )
