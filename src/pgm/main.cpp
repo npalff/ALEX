@@ -14,8 +14,8 @@
 // Modify these if running your own workload
 
 // Long and Longlat Dataloads
-//#define KEY_TYPE double
-//#define PAYLOAD_TYPE double
+#define KEY_TYPE double
+#define PAYLOAD_TYPE double
 
 // Lognormal dataload
 //#define KEY_TYPE int64_t
@@ -26,8 +26,8 @@
 //#define PAYLOAD_TYPE uint64_t
 
 // Artificial new created dataloads
-#define KEY_TYPE int
-#define PAYLOAD_TYPE int
+//#define KEY_TYPE int
+//#define PAYLOAD_TYPE int
 
 
 /*
