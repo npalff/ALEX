@@ -23,7 +23,7 @@ include_directories(src/core/pgm)
 add_executable(lipp src/lipp/benchmark.cpp)
 #add_executable(example src/examples/main.cpp)
 add_executable(alex src/benchmark/main.cpp)
-#add_executable(pgm src/pgm/benchmark.cpp)
+add_executable(pgm src/pgm/benchmark.cpp)
 
 set(DOCTEST_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/doctest)
 file(DOWNLOAD

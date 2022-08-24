@@ -48,6 +48,8 @@ elif benchmarkFile == "random":
 elif benchmarkFile == "shipDates":
     keysFile = "shipDates.txt"
     keysType = "text"
+elif benchmarkFile == "wiki":
+    keysFile = "wiki"
 
 else:
     print("Possible workloads:long, longlat, lognormal, ycsb, minMax, density, primeNumbers, repeat, random" )
