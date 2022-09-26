@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
             [](auto const& a, auto const& b) { return a.first < b.first; });
   for (int k = 1; k < init_num_keys; k++)
   {
-    std::cout<< values[k].first;
+    std::cout<<"key "<<k<<" :   " << values[k].first<<"\n";
   }
   lipp.bulk_load(values, init_num_keys);
 
