@@ -92,7 +92,9 @@ int main(int argc, char* argv[]) {
   LIPP<KEY_TYPE, PAYLOAD_TYPE> lipp;
   std::sort(values, values + init_num_keys,
             [](auto const& a, auto const& b) { return a.first < b.first; });
-
+  for (int i = 1; i < init_num_keys; i ++){
+    std::cout<< values[i];
+  }
   lipp.bulk_load(values, init_num_keys);
 
   // Run workload
