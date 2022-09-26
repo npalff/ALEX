@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
       debugCounter_LowerKey++;
     }
   }
-  std::cout<<"\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\n\n\n"
+  std::cout<<"\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\n\n\n";
   std::cout<<"LOWER KEYS Counter: "<< debugCounter_LowerKey;
 
   lipp.bulk_load(values, init_num_keys);
