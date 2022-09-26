@@ -94,7 +94,13 @@ int main(int argc, char* argv[]) {
             [](auto const& a, auto const& b) { return a.first < b.first; });
   for (int k = 1; k < init_num_keys; k++)
   {
-    std::cout<<"key "<<k<<" :   " << values[k].first<<"\n";
+    //std::cout<<"key "<<k<<" :   " << values[k].first<<"\n";
+    if(values[k].first == values[k-1].first){
+      std::cout<< "\n\nSAME KEY\n\n"
+    }
+    if(values[k].first < values[k-1].first){
+      std::cout<< "\n\nLOWER KEY\n\n"
+    }
   }
   lipp.bulk_load(values, init_num_keys);
 
