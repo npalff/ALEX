@@ -96,10 +96,10 @@ int main(int argc, char* argv[]) {
   {
     //std::cout<<"key "<<k<<" :   " << values[k].first<<"\n";
     if(values[k].first == values[k-1].first){
-      std::cout<< "\n\nSAME KEY\n\n"
+      std::cout<< "\n\nSAME KEY\n\n";
     }
     if(values[k].first < values[k-1].first){
-      std::cout<< "\n\nLOWER KEY\n\n"
+      std::cout<< "\n\nLOWER KEY\n\n";
     }
   }
   lipp.bulk_load(values, init_num_keys);
