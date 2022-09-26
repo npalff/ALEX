@@ -387,7 +387,9 @@ private:
             std::swap(key1, key2);
             std::swap(value1, value2);
         }
-        RT_ASSERT(key1 < key2);
+        // FIX Assert
+        //Original code: RT_ASSERT(key1 < key2);
+        RT_ASSERT(key1 <= key2);
         static_assert(BITMAP_WIDTH == 8);
 
         Node* node = NULL;
