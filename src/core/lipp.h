@@ -164,7 +164,9 @@ public:
 
         RT_ASSERT(num_keys > 2);
         for (int i = 1; i < num_keys; i ++) {
-            RT_ASSERT(vs[i].first > vs[i-1].first);
+            // Fix on ASSERT
+            // Original code: RT_ASSERT(vs[i].first > vs[i-1].first);
+            RT_ASSERT(vs[i].first >= vs[i-1].first);
         }
 
         T* keys = new T[num_keys];
