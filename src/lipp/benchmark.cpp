@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
     //std::cout<<"key "<<k<<" :   " << values[k].first<<"\n";
     if(values[k].first == values[k-1].first){
      std::cout<< "==================================\nSAME KEY\n==============================\n";
-     std::cout<<"key "<<k<<" :   " << values[k].first<<"     ||||||||||||||||     last key:  "<< values[k-1].first <<"\n"
+     std::cout<<"key "<<k<<" :   " << values[k].first<<"     ||||||||||||||||     last key:  "<< values[k-1].first <<"\n";
      debugCounter_SameKey++;
     }
     if(values[k].first < values[k-1].first){
