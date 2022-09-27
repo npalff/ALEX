@@ -92,14 +92,13 @@ int main(int argc, char* argv[]) {
   LIPP<KEY_TYPE, PAYLOAD_TYPE> lipp;
   std::sort(values, values + init_num_keys,
             [](auto const& a, auto const& b) { return a.first < b.first; });
-  /*
   int debugCounter_LowerKey = 0;
   for (int k = 1; k < init_num_keys; k++)
   {
-    std::cout<<"key "<<k<<" :   " << values[k].first<<"\n";
-    if(values[k].first == values[k-1].first){
-      std::cout<< "==================================\nSAME KEY\n==============================\n";
-    }
+    //std::cout<<"key "<<k<<" :   " << values[k].first<<"\n";
+    //if(values[k].first == values[k-1].first){
+    //  std::cout<< "==================================\nSAME KEY\n==============================\n";
+    //}
     if(values[k].first < values[k-1].first){
       std::cout<< "******************************\nLOWER KEY\n*********************************\n";
       debugCounter_LowerKey++;
