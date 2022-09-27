@@ -93,21 +93,24 @@ int main(int argc, char* argv[]) {
   std::sort(values, values + init_num_keys,
             [](auto const& a, auto const& b) { return a.first < b.first; });
   int debugCounter_LowerKey = 0;
-  std::cout<<"Enter debug prints";
+  int debugCounter_SameKey = 0;
+  std::cout<<"\n\n\n\n\n\n\n\nEnter debug prints\n\n";
   for (int k = 1; k < init_num_keys; k++)
   {
     //std::cout<<"key "<<k<<" :   " << values[k].first<<"\n";
-    //if(values[k].first == values[k-1].first){
-    //  std::cout<< "==================================\nSAME KEY\n==============================\n";
-    // std::cout<<"key "<<k<<" :   " << values[k].first<<"     ||||||||||||||||     last key:  "<< values[k-1].first <<"\n"
-    //}
+    if(values[k].first == values[k-1].first){
+     std::cout<< "==================================\nSAME KEY\n==============================\n";
+     std::cout<<"key "<<k<<" :   " << values[k].first<<"     ||||||||||||||||     last key:  "<< values[k-1].first <<"\n"
+     debugCounter_SameKey++;
+    }
     if(values[k].first < values[k-1].first){
       std::cout<< "******************************\nLOWER KEY\n*********************************\n";
       debugCounter_LowerKey++;
     }
   }
   std::cout<<"\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\n\n\n";
-  std::cout<<"LOWER KEYS Counter: "<< debugCounter_LowerKey;
+  std::cout<<"\nLOWER KEYS Counter: "<< debugCounter_LowerKey<<"\n";
+  std::cout<<"\nSAME KEYS Counter: "<< debugCounter_SameKey<<"\n\n\n";
   
   lipp.bulk_load(values, init_num_keys);
 
